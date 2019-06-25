@@ -12,7 +12,7 @@ These materials were prepared for the Harvard-MIT Theoretical and Computational 
 
 ## Prerequisites
 
-To run this tutorial, you will need to install [Pytorch](https://pytorch.org/) and [numpy](https://www.numpy.org/). See the notebook `demo.ipynb` for more details.
+To run this tutorial, you will need to install [Pytorch](https://pytorch.org/), [numpy](https://www.numpy.org/), and [Jupyter](https://jupyter.org/). See the notebook `demo.ipynb` for more details.
 
 To evaluate the pre-trained model, you will need to download the checkpoint from [this link](https://www.dropbox.com/s/er9exdbwun4rex9/model_bnc.pt?dl=1).
 Alternatively, you can run

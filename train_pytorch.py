@@ -192,7 +192,7 @@ def set_hyperparameters(model_dir,
         rule_prob = np.array(
                 [rule_prob_map.get(r, 1.) for r in hp['rule_trains']])
         hp['rule_probs'] = list(rule_prob/np.sum(rule_prob))
-    tools.save_hp(hp, model_dir)
+#     tools.save_hp(hp, model_dir)
 
 #     ##### Build the model #####
 #     model = Model(model_dir, hp=hp)
@@ -358,8 +358,8 @@ def do_eval(run_model, log, rule_train):
     log['perf_min'].append(perf_tests_min)
 
     # Saving the model
-#     run_model.save()  # Saving not implemented yet: Huh
-    tools.save_log(log)
+#     run_model.save()  # Saving not implemented
+#     tools.save_log(log)
 
     return log
 

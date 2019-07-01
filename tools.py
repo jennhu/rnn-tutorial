@@ -1,4 +1,7 @@
-"""Utility functions."""
+"""Utility functions.
+Copied from https://github.com/gyyang/multitask.
+gen_feed_dict() moved to train_pytorch.py
+"""
 
 import os
 import errno
@@ -6,93 +9,6 @@ import six
 import json
 import pickle
 import numpy as np
-
-import torch
-# import pdb
-
-def gen_feed_dict(trial, hp):
-    """Generate feed_dict for session run."""
-    if hp['in_type'] == 'normal':
-        pass
-#         feed_dict = {'x':      trial.x,
-#                      'y':      trial.y,
-#                      'c_mask': trial.c_mask}
-    elif hp['in_type'] == 'multi':
-        n_time, batch_size = trial.x.shape[:2]
-        new_shape = [n_time,
-                     batch_size,
-                     hp['rule_start']*hp['n_rule']]
-
-        x = np.zeros(new_shape, dtype=np.float32)
-        for i in range(batch_size):
-            ind_rule = np.argmax(trial.x[0, i, hp['rule_start']:])
-            i_start = ind_rule*hp['rule_start']
-            x[:, i, i_start:i_start+hp['rule_start']] = trial.x[:, i, :hp['rule_start']]
-        trial.x     = x
-    else:
-        raise ValueError()
-        
-    trial.x     = torch.tensor(trial.x)
-    trial.y     = torch.tensor(trial.y)
-    T, batch, _ = trial.x.shape
-    trial.c_mask = torch.tensor(trial.c_mask).view(T, batch, -1)
-
-    return trial
-
-
-def popvec(y):
-    """Population vector read out.
-
-    Assuming the last dimension is the dimension to be collapsed
-
-    Args:
-        y: population output on a ring network. Numpy array (Batch, Units)
-
-    Returns:
-        Readout locations: Numpy array (Batch,)
-    """
-    pref = np.arange(0, 2*np.pi, 2*np.pi/y.shape[-1])  # preferences
-    temp_sum = y.sum(axis=-1)
-    temp_cos = np.sum(y*np.cos(pref), axis=-1)/temp_sum
-    temp_sin = np.sum(y*np.sin(pref), axis=-1)/temp_sum
-    loc = np.arctan2(temp_sin, temp_cos)
-    return np.mod(loc, 2*np.pi)
-
-
-def get_perf(y_hat, y_loc):
-    """Get performance.
-
-    Args:
-      y_hat: Actual output. Numpy array (Time, Batch, Unit)
-      y_loc: Target output location (-1 for fixation).
-        Numpy array (Time, Batch)
-
-    Returns:
-      perf: Numpy array (Batch,)
-    """
-    if len(y_hat.shape) != 3:
-        raise ValueError('y_hat must have shape (Time, Batch, Unit)')
-    # Only look at last time points
-    y_loc = y_loc[-1]
-    y_hat = y_hat[-1]
-
-    # Fixation and location of y_hat
-    y_hat_fix = y_hat[..., 0]
-    y_hat_loc = popvec(y_hat[..., 1:])
-
-    # Fixating? Correctly saccading?
-    fixating = y_hat_fix > 0.5
-
-    original_dist = y_loc - y_hat_loc
-    dist = np.minimum(abs(original_dist), 2*np.pi-abs(original_dist))
-    corr_loc = dist < 0.2*np.pi
-
-    # Should fixate?
-    should_fix = y_loc < 0
-
-    # performance
-    perf = should_fix * fixating + (1-should_fix) * corr_loc * (1-fixating)
-    return perf
 
 
 

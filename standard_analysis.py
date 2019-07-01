@@ -5,7 +5,7 @@ from __future__ import division
 import numpy as np
 import matplotlib.pyplot as plt
 from task import rule_name  #, generate_trials
-import tools_pytorch as tools
+import tools as tools
 import torch
 
 def easy_activity_plot(model, rule):
@@ -16,16 +16,9 @@ def easy_activity_plot(model, rule):
         rule: string, the rule to plot
     """
 
-#     model = Model(model_dir)
     hp = model.hp
 
     _,_, y_hat, h, trial = model(rule = rule, mode='test')
-#     with tf.Session() as sess:
-#         model.restore()
-#         trial = generate_trials(rule, hp, mode='test')
-#         feed_dict = tools.gen_feed_dict(model, trial, hp)
-#         h, y_hat = sess.run([model.h, model.y_hat], feed_dict=feed_dict)
-        # All matrices have shape (n_time, n_condition, n_neuron)
 
     # Take only the one example trial
     i_trial = 0
@@ -46,7 +39,6 @@ def easy_activity_plot(model, rule):
 def easy_connectivity_plot(model):
     """A simple plot of network connectivity."""
     raise NotImplementedError
-# #     model = Model(model_dir)
 #     with tf.Session() as sess:
 #         model.restore()
 #         # get all connection weights and biases as tensorflow variables
@@ -86,17 +78,11 @@ def pretty_inputoutput_plot(model, rule, save=False, plot_ylabel=False):
 
     fs = 7
 
-#     model = Model(model_dir)
     hp = model.hp
 
     _,_, y_hat, h, trial = model(rule = rule, mode='test')
-#     with tf.Session() as sess:
-#         model.restore()
-
-#         trial = generate_trials(rule, hp, mode='test')
-#         x, y = trial.x, trial.y
-#         feed_dict = tools.gen_feed_dict(model, trial, hp)
-#         h, y_hat = sess.run([model.h, model.y_hat], feed_dict=feed_dict)
+    x = trial.x.detach().cpu().numpy()
+    y = trial.y.detach().cpu().numpy()
 
     t_plot = np.arange(x.shape[0])*hp['dt']/1000
 

@@ -1,4 +1,5 @@
-"""Collections of tasks."""
+"""Collections of tasks.
+Copied from https://github.com/gyyang/multitask."""
 
 from __future__ import division
 import six

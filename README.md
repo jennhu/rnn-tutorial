@@ -2,7 +2,10 @@
 
 Recurrent neural networks (RNNs) have become increasingly popular in machine learning for handling sequential data. In this tutorial, we will cover background about the architecture, a toy training example, and a demo for evaluating a larger pre-trained model.
 
-These materials were prepared for the Harvard-MIT Theoretical and Computational Neuroscience Journal Club and should be beginner-friendly!
+These materials are prepared for the [Harvard-MIT Theoretical and Computational Neuroscience Journal Club](https://compneurojc.github.io/) and should be beginner-friendly!
+
+The RNN multitask training repo is imported from https://github.com/benhuh/RNN_multitask.
+
 
 **Date**: June 26, 2019
 

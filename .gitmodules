@@ -1,0 +1,3 @@
+[submodule "RNN_multitask"]
+	path = RNN_multitask
+	url = https://github.com/benhuh/RNN_multitask.git

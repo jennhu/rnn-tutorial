@@ -9,11 +9,13 @@ The RNN multitask training repo is imported from https://github.com/benhuh/RNN_m
 
 **Date**: June 26, 2019
 
-**Authors**: Jennifer Hu (MIT) and Ben Huh (IBM)
+**Authors**: Jennifer Hu (MIT), Ben Huh (IBM), Peng Qian (MIT)
 
 ---
 
 ## Prerequisites
+
+**NOTE: If you are cloning this repository, make sure to use the flag `--recurse-submodules` or `--recursive` depending on your version of Git (see https://stackoverflow.com/a/4438292).**
 
 To run this tutorial, you will need to install [Pytorch](https://pytorch.org/), [numpy](https://www.numpy.org/), and [Jupyter](https://jupyter.org/). See the notebook `demo.ipynb` for more details.
 
